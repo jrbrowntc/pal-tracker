@@ -2,6 +2,7 @@ package io.pivotal.pal.tracker;
 
 import io.pivotal.pal.trackerapi.TimeEntry;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface TimeEntryRepository {

@@ -3,8 +3,8 @@ package test.pivotal.pal.tracker;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import io.pivotal.pal.tracker.JdbcTimeEntryRepository;
-import io.pivotal.pal.tracker.TimeEntry;
 import io.pivotal.pal.tracker.TimeEntryRepository;
+import io.pivotal.pal.trackerapi.TimeEntry;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -79,7 +79,6 @@ public class JdbcTimeEntryRepositoryTest {
     @Test
     public void findReturnsNullWhenNotFound() throws Exception {
         TimeEntry timeEntry = subject.find(999L);
-
         assertThat(timeEntry).isNull();
     }
 
