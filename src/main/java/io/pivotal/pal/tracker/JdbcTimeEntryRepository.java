@@ -8,7 +8,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -18,7 +17,6 @@ import static java.sql.Statement.RETURN_GENERATED_KEYS;
 public class JdbcTimeEntryRepository implements TimeEntryRepository {
 
     private JdbcTemplate jdbcTemplate;
-
 
     private final RowMapper<TimeEntry> mapper = (rs, rowNum) -> new TimeEntry(
             rs.getLong("id"),
@@ -65,25 +63,18 @@ public class JdbcTimeEntryRepository implements TimeEntryRepository {
     }
 
     @Override
-    public TimeEntry update(long eq, TimeEntry any) {
-        KeyHolder generatedKeyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> {
-            PreparedStatement statement = connection.prepareStatement(
-                    "UPDATE time_entries SET project_id=?, user_id=?, date=?, hours=? WHERE id = ?", RETURN_GENERATED_KEYS
-            );
-            statement.setLong(1, any.getProjectId());
-            statement.setLong(2, any.getUserId());
-            statement.setDate(3, Date.valueOf(any.getDate()));
-            statement.setLong(4, any.getHours());
-            statement.setLong(5, eq);
-
-            return statement;
-        }, generatedKeyHolder);
-        return find(generatedKeyHolder.getKey().longValue());
+    public TimeEntry update(long id, TimeEntry timeEntry) {
+        jdbcTemplate.update("UPDATE time_entries SET project_id=?, user_id=?, date=?, hours=? WHERE id = ?",
+            timeEntry.getProjectId(),
+            timeEntry.getUserId(),
+            Date.valueOf(timeEntry.getDate()),
+            timeEntry.getHours(),
+            id);
+        return find(id);
     }
 
     @Override
     public void delete(long timeEntryId) {
-
+        jdbcTemplate.update("DELETE FROM time_entries WHERE id="+timeEntryId);
     }
 }
