@@ -13,12 +13,12 @@ public class TimeEntryHealthIndicator implements HealthIndicator {
     }
     @Override
     public Health health() {
-        Health.Builder builder = new Health.Builder();
+        Health.Builder healthBuilder = new Health.Builder();
         if(timeEntryRepository.list().size() < 5) {
-            builder.up();
+            healthBuilder.up();
         } else {
-            builder.down();
+            healthBuilder.down();
         }
-        return builder.build();
+        return healthBuilder.build();
     }
 }

@@ -1,6 +1,7 @@
 package io.pivotal.pal.tracker;
 
 import io.pivotal.pal.trackerapi.TimeEntry;
+import org.springframework.boot.actuate.autoconfigure.EndpointWebMvcHypermediaManagementContextConfiguration;
 import org.springframework.boot.actuate.metrics.CounterService;
 import org.springframework.boot.actuate.metrics.GaugeService;
 import org.springframework.http.HttpStatus;
